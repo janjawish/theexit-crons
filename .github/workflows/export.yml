@@ -1,0 +1,15 @@
+name: TheExit Cron Pings
+
+on:
+  schedule:
+    - cron: "5 0 * * *"     # tous les jours à 00:05
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping rebuild gm work logs
+        run: |
+          echo "Calling rebuild gm work logs..."
+          curl -fsS "${{ secrets.CRON_REBUILD_WORKLOGS_URL }}" | head -c 4000 || true
