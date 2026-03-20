@@ -2,8 +2,8 @@ name: TheExit Cron Pings
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # toutes les 5 minutes
-  workflow_dispatch:        # bouton Run workflow manuel
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
 
 jobs:
   ping:
@@ -12,9 +12,9 @@ jobs:
       - name: Ping ingest (Gmail API)
         run: |
           echo "Calling ingest..."
-          curl -fsS "${{ secrets.CRON_INGEST_URL }}" | head -c 2000 || true
+          curl -fLsS "${{ secrets.CRON_INGEST_URL }}" | head -c 4000
 
       - name: Ping dispatch (notifications)
         run: |
           echo "Calling dispatch..."
-          curl -fsS "${{ secrets.CRON_DISPATCH_URL }}" | head -c 2000 || true
+          curl -fLsS "${{ secrets.CRON_DISPATCH_URL }}" | head -c 4000
